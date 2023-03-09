@@ -61,8 +61,18 @@ Very importantly, create an empty =pkb4000-web/search/_index.md= just so that yo
   python3 build.py
 #+end_src
 
+* Bonus round: Keep site up to date and serve with docker
 
+Using =crontab -e= I added the following:
 
+#+begin_src crontab
+  37 * * * * cd /home/cpbotha/sync/notes/pkb4000/braindump4000 && /usr/bin/python3 build.py && cd /home/cpbotha/sync/notes/pkb4000-web && /usr/local/bin/hugo
+#+end_src
 
+I have the following running on WSL:
 
+#+begin_src shell
+  docker run -d --restart unless-stopped -p 80:80 -v /home/cpbotha/sync/notes/pkb4000-web/public:/usr/share/nginx/html nginx
+#+end_src
 
+Thanks to docker and the (secure) magic of tailscale, I can connect easily connect from my phone!
