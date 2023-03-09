@@ -1,4 +1,9 @@
-#+TITLE: braindump4000: cpbotha heavily modified jethrokuan braindump
+#+TITLE: braindump4000: heavily modified jethrokuan braindump
+
+Convert your nested org mode database with broken links into a Hugo website.
+
+In addition to nesting and broken links, braindump4000 also deals with it if
+you are already using Hugo to publish parts of your org mode database.
 
 * Quickstart
 
