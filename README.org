@@ -5,6 +5,9 @@ Convert your nested org mode database with broken links into a Hugo website.
 In addition to nesting and broken links, braindump4000 also deals with it if
 you are already using Hugo to publish parts of your org mode database.
 
+You could also use org-publish (mine is setup), but on my 1000+ file database,
+that takes forever, even when most of the files don't have to be republished.
+
 * Quickstart
 
 Let's say the root directory containing your nested org-mode database is
