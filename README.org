@@ -28,9 +28,13 @@ Install jethrokuan's [[https://github.com/jethrokuan/cortex][cortex]] theme:
   git clone https://github.com/jethrokuan/cortex.git
 #+end_src
 
-Install his [https://github.com/jethrokuan/braindump/blob/master/config.toml][config.toml] at the top-level.
+Install his [[https://github.com/jethrokuan/braindump/blob/master/config.toml][config.toml]] at the top-level.
 
-Add ~refLinksErrorLevel = "WARNING"~ at the top level of the config.
+Add the root level of the config, add:
+
+#+begin_src yaml
+refLinksErrorLevel = "WARNING"
+#+end_src
 
 ** Add two important pages
 
