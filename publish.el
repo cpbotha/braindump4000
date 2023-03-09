@@ -1,11 +1,14 @@
-;; cpbotha: if search-and-get-anchor yields error, we also want to return empty string ""
-;; do this inside defun org-hugo-link -- better would be to advice org-hugo--search-and-get-anchor
-;; (setq anchor (condition-case err
-;;                  (org-hugo--search-and-get-anchor raw-path link-search-str info)
-;;                (error (progn
-;;                         (message "=====> org-link-search IGNORED ERROR: %s" err)
-;;                         ""))))
+;; cpbotha: if org-hugo--search-and-get-anchor (called by org-hugo-link) yields error,
+;; export stops, so here we advise it to just report and return the "normal" anochor-not-found ""
+;; (my database is old, sometimes there are links to files outside of ith that don't exist anymore)
+(defun oh--saga (orig-org-hugo--search-and-get-anchor &rest args)
+  (condition-case err
+      (apply orig-org-hugo--search-and-get-anchor args)
+    (error (progn
+             (message "=====> org-link-search IGNORED ERROR: %s" err)
+             ""))))
 
+(advice-add #'org-hugo--search-and-get-anchor :around #'oh--saga)
 
 (recentf-mode -1)
 
