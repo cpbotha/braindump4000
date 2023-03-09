@@ -1,0 +1,8 @@
+
+#+begin_src shell
+  cd notes
+  hugo new site pkb4000-web
+  cd notes/pkb4000/braindump4000
+  python3 build.py
+#+end_src
+
