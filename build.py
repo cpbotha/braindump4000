@@ -1,11 +1,19 @@
 #!/usr/bin/env python
 
+import os
 from pathlib import Path
 
-# this is pkb4000: the top-level of my org-mode database
+# we do need to run ninja from the same dir as this script, as it requires
+# the bundled init-tiny.el and publish.el
+this_dir = Path(__file__).parent.resolve()
+os.chdir(this_dir)
+
+# you can reconfigure the below two paths for your setup.
+# In my case:
+# 1. this resolves to pkb4000: the top-level of my org-mode database
 org_dir = Path("..").resolve()
-# this is the destination hugo site
-hugo_dir = Path("../../pkb4000-web").resolve()
+# 2. this is the destination hugo site
+hugo_dir = Path("../../web-pkb4000").resolve()
 
 files = org_dir.rglob("*.org")
 
