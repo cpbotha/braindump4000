@@ -5,6 +5,19 @@
 ;; delete the 6 "disable ghostscript format types" lines in /etc/ImageMagick-6/policy.xml
 ;; https://stackoverflow.com/questions/52998331/imagemagick-security-policy-pdf-blocking-conversion
 
+;; we add melpa so we can install ox-hugo
+(setq package-archives
+      '(
+        ("elpa" . "https://elpa.gnu.org/packages/")
+        ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+        ("melpa" . "https://melpa.org/packages/")
+        ;; fallback for when the official ones act up
+        ;;("melpa" . "https://raw.githubusercontent.com/d12frosted/elpa-mirror/master/melpa/")
+        ;;("gnu"   . "https://raw.githubusercontent.com/d12frosted/elpa-mirror/master/gnu/")
+        )
+      )
+
+
 (package-initialize)
 
 ;; Bootstrap `use-package'
