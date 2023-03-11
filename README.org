@@ -13,20 +13,20 @@ forever, even when most of the files don't have to be republished.
 * Quickstart
 
 Let's say the root directory containing your nested org-mode database is
-=~/notes/pkb4000= and you want a Hugo version in =~/notes/pkb4000-web= then you
+=~/notes/pkb4000= and you want a Hugo version in =~/notes/web-pkb4000= then you
 could do the following:
 
 ** Create the hugo website
 
 #+begin_src shell
   cd ~/notes
-  hugo new site pkb4000-web
+  hugo new site web-pkb4000
 #+end_src
 
 Install jethrokuan's [[https://github.com/jethrokuan/cortex][cortex]] theme:
 
 #+begin_src shell
-  cd ~/notes/pkb4000-web/themes
+  cd ~/notes/web-pkb4000/themes
   git clone https://github.com/jethrokuan/cortex.git
 #+end_src
 
@@ -40,7 +40,7 @@ refLinksErrorLevel = "WARNING"
 
 ** Add two important pages
 
-Create =pkb4000-web/content/_index.md= for the front page:
+Create =web-pkb4000/content/_index.md= for the front page:
 
 #+begin_src markdown
 Well hello!
@@ -48,16 +48,22 @@ Well hello!
 See the [index](posts).
 #+end_src
 
-Very importantly, create an empty =pkb4000-web/search/_index.md= just so that your search works.
+Very importantly, create an empty =web-pkb4000/search/_index.md= just so that your search works.
 
 ** Build your site with braindump4000
 
 #+begin_src shell
+  # I usually clone braindump4000 inside my notes database pkb4000
   cd notes/pkb4000
   git clone https://github.com/cpbotha/braindump4000.git
-  cd notes
-  hugo new site pkb4000-web
+  # this will build the site in ../../web-pkb4000
   cd notes/pkb4000/braindump4000
   python3 build.py
 #+end_src
+
+The instructions above are just following my example.
+
+However, as long as you configure ~org_dir~ and ~hugo_dir~ correctly in =build.py=,
+everything should work for different directory setups.
+
 
