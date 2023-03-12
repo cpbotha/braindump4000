@@ -68,4 +68,8 @@ everything should work for different directory setups.
 
 * Obligatory screenshot(s)
 
+In the screenshot below, I started with the Apple WatchOS 9 sleep tracking
+video note, from there the Sleep backlinks page, then the Seven and a Half
+Lessons about the Brain book notes and finally my Books backlinks.
+
 [[file:screenshots/apple-watch-sleep-sleep-feldman-books.png][file:screenshots/apple-watch-sleep-sleep-feldman-books.png]]
