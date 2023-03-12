@@ -66,4 +66,6 @@ The instructions above are just following my example.
 However, as long as you configure ~org_dir~ and ~hugo_dir~ correctly in =build.py=,
 everything should work for different directory setups.
 
+* Obligatory screenshot(s)
 
+[[file:screenshots/apple-watch-sleep-sleep-feldman-books.png][file:screenshots/apple-watch-sleep-sleep-feldman-books.png]]
