@@ -73,3 +73,6 @@ video note, from there the Sleep backlinks page, then the Seven and a Half
 Lessons about the Brain book notes and finally my Books backlinks.
 
 [[file:screenshots/apple-watch-sleep-sleep-feldman-books.png][file:screenshots/apple-watch-sleep-sleep-feldman-books.png]]
+
+My braindump site is being served using [[https://github.com/PierreZ/goStatic][goStatic,]] tightly bound to a private
+[[https://tailscale.com/][tailnet]] IP.
