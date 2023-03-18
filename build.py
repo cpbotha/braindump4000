@@ -71,4 +71,4 @@ build {output_file}: org2md {org_dir / rf}
 
 import subprocess
 
-#subprocess.call(["ninja"])
+subprocess.call(["ninja"])
