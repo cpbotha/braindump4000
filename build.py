@@ -49,12 +49,13 @@ files = org_dir.rglob("*.org")
 
 post_proc = f" && {obs_postproc_py} $out" if args.obsidian else ""
 
-# we create build.ninja right here in org_dir/braindump4000/
+# - we create build.ninja in the output dir
+# - experiment: -nw added because it looked like the many emacs instances were messing with my wslg
 with Path("build.ninja").open("w") as ninja_file:
     ninja_file.write(
         f"""
 rule org2md
-  command = emacs --batch -l {init_tiny_el} -l {publish_el} --eval \"(cpb/publish \\"{org_dir}\\" \\"$in\\" \\"{hugo_dir}\\" \\"$out\\" )\"{post_proc}
+  command = emacs -nw --batch -l {init_tiny_el} -l {publish_el} --eval \"(cpb/publish \\"{org_dir}\\" \\"$in\\" \\"{hugo_dir}\\" \\"$out\\" )\"{post_proc}
   description = org2md $in
 """
     )
