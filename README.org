@@ -56,9 +56,9 @@ Very importantly, create an empty =web-pkb4000/search/_index.md= just so that yo
   # I usually clone braindump4000 inside my notes database pkb4000
   cd notes/pkb4000
   git clone https://github.com/cpbotha/braindump4000.git
-  # this will build the site in ../../web-pkb4000
   cd notes/pkb4000/braindump4000
-  python3 build.py
+  # this will build the site in ../../web-pkb4000  
+  python3 build.py ~/notes/pkb4000 ~/notes/web-pkb4000
 #+end_src
 
 The instructions above are just following my example.
@@ -76,3 +76,12 @@ Lessons about the Brain book notes and finally my Books backlinks.
 
 My braindump site is being served using [[https://github.com/PierreZ/goStatic][goStatic,]] tightly bound to a private
 [[https://tailscale.com/][tailnet]] IP.
+
+* Secret bonus-round
+
+braindump4000 is also able to transform your org-mode database into a vault
+usable by Obsidian.
+
+I've *just* added this [2023-03-18 Sat 14:39]. it's documented in the code, and
+the cli help, but I have to run now. Will add more later.
+
