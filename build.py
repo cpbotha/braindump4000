@@ -4,13 +4,21 @@ import argparse
 import os
 from pathlib import Path
 
-parser = argparse.ArgumentParser(description='Convert Emacs Org mode database to Hugo / Obsidian')
-parser.add_argument('org_dir', 
-                    help='Directory containing your nested org mode database')
-parser.add_argument('out_dir', 
-                    help='Output directory. This must take the form hugo-site/content/something, where "something" is usually posts')
-parser.add_argument('--obsidian', action='store_true',
-                    help='Perform Obsidian-targeted markdown transformations. Default: Hugo only.')
+parser = argparse.ArgumentParser(
+    description="Convert Emacs Org mode database to Hugo / Obsidian"
+)
+parser.add_argument(
+    "org_dir", help="Directory containing your nested org mode database"
+)
+parser.add_argument(
+    "out_dir",
+    help='Output directory. This must take the form hugo-site/content/something, where "something" is usually posts',
+)
+parser.add_argument(
+    "--obsidian",
+    action="store_true",
+    help="Perform Obsidian-targeted markdown transformations. Default: Hugo only.",
+)
 
 args = parser.parse_args()
 
@@ -26,9 +34,17 @@ out_dir = Path(args.out_dir).resolve()
 # ox-hugo has some logic that relies on the "content/<something>" convention
 try:
     # find last occurrence of "content" -- everything before that is hugo-site dir
-    ci = next((i for i in range(len(out_dir.parts)-1,-1,-1) if out_dir.parts[i] == 'content'))
+    ci = next(
+        (
+            i
+            for i in range(len(out_dir.parts) - 1, -1, -1)
+            if out_dir.parts[i] == "content"
+        )
+    )
 except StopIteration:
-    print("Your out_dir argument should contain the 'content' path component, e.g. hugo_site/content/posts/")
+    print(
+        "Your out_dir argument should contain the 'content' path component, e.g. hugo_site/content/posts/"
+    )
     exit()
 
 hugo_dir = Path(*out_dir.parts[0:ci])
