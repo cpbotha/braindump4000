@@ -19,6 +19,9 @@ parser.add_argument(
     action="store_true",
     help="Perform Obsidian-targeted markdown transformations. Default: Hugo only.",
 )
+parser.add_argument(
+    "-j", type=int, help="Number of ninja threads. Leave out for default #CPUs."
+)
 
 args = parser.parse_args()
 
@@ -87,4 +90,8 @@ build {output_file}: org2md {org_dir / rf}
 
 import subprocess
 
-subprocess.call(["ninja"])
+cmd = ["ninja"]
+if args.j:
+    cmd.extend(["-j", str(args.j)])
+
+subprocess.call(cmd)
