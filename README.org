@@ -119,13 +119,14 @@ My braindump site is being served using [[https://github.com/PierreZ/goStatic][g
 :ID:       96519759-e345-4e62-9ef7-3959f77d6411
 :END:
 
-[[file:screenshots/obs_search.jpg]]
+#+ATTR_HTML: :width 200px
+[[file:screenshots/obs_search.jpg][file:screenshots/obs_search.jpg]]
 
-[[file:screenshots/obs_code.jpg]]
+[[file:screenshots/obs_code.jpg][file:screenshots/obs_code.jpg]]
 
-[[file:screenshots/obs_image.jpg]]
+[[file:screenshots/obs_image.jpg][file:screenshots/obs_image.jpg]]
 
-[[file:screenshots/obs_backlinks.jpg]]
+[[file:screenshots/obs_backlinks.jpg][file:screenshots/obs_backlinks.jpg]]
 
 
 
