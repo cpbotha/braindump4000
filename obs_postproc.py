@@ -43,6 +43,8 @@ Another para.
 
 Skip to [what about pandoc](#what-about-pandoc)
 
+It should not rewrite links like this [google search](https://google.com#something)
+
 """
 
 # https://regex101.com/ is your friend!
@@ -51,8 +53,14 @@ def transform(text):
     # note the two strategically placed non-greedy *? operators else this will eat up additional example +++ blocks
     t2 = re.sub(r'^\s*\+\+\+.*?title = "([^"]+)".*?\+\+\+', "# \\1", text, flags=re.DOTALL)
 
-    # replace all relref links with "normal" [title](localfile) links
-    t3 = re.sub('{{< relref "([^"]+)" >}}', '\\1', t2)
+    # 1. replace all relref links with "normal" [title](localfile) links
+    # 2. In addition, work around Obsidian's silly lack of user-defined named anchor support:
+    #    rewrite all links with anchors to `#^anchor` obs blockrefs; here we do only the relref (otherfile) ones
+    #    See t35 next, and t5 below for the rest of this hack
+    t3 = re.sub(r'{{< relref "([^"#]+)(#([^"]+))?" >}}', lambda m: m.group(1) + (f"#^{m.group(3)}" if m.group(3) else ''), t2)
+
+    # here we rewrite all local [label](#anchor) to [label](#^anchor)
+    t35 = re.sub(r'(\[[^]]+\])\(#([^)]+)\)', '\\1(#^\\2)', t3)
 
     # replace
     # {{< figure src="/ox-hugo/2022-12-31_16-17-19_screenshot.png" caption="<span class=\"figure-number\">Figure 2: </span>Random drop-outs in graph below. At least finished strong in last week of year." >}}
@@ -60,7 +68,7 @@ def transform(text):
     # ![](static/ox-hugo/...)
     # BTW obsidian finds the figure even without any prepended path components, as long as it's in the vault
     # until we figure out a better scheme, we rewrite the path to be relative to the site / vault top-level
-    t4 = re.sub('{{< figure src="/ox-hugo/([^"]+)".* >}}', '![](static/ox-hugo/\\1)', t3)
+    t4 = re.sub('{{< figure src="/ox-hugo/([^"]+)".* >}}', '![](static/ox-hugo/\\1)', t35)
 
     # here we rewrite e.g. "## Some heading {#some-heading}" into "## Some heading\n^some-heading"
     # in other words, to work around Obsidian's disappointing lack of named anchor support we
@@ -71,14 +79,10 @@ def transform(text):
     #  3. supporting extended "# My heading {#my-heading}" markdown anchors.)
     t5 = re.sub(r'^( *#+ +[^{]+)\s+{#([^}]+)}', '\\1\n^\\2', t4, flags=re.MULTILINE)
 
-    # This is part 2 of working around Obsidian's silly lack of user-defined named anchor support
-    # we have to rewrite all links with anchors (both same file and other file) to add the ^
-    t55 = re.sub(r'(\[[^]]+\])\(([^#)]*)#([^)]+)\)', '\\1(\\2#^\\3)', t5)
-
-    return t55
+    return t5
 
 # uncomment when testing with cell-based execution
-#print(transform(s))
+print(transform(s))
 
 #%%
 def main():
