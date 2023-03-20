@@ -138,6 +138,6 @@ private [tailnet](https://tailscale.com/) IP.
 
 ### Why is this README markdown and not org?
 
-github's org mode support does not seem to include a way to specify image
-display size. See e.g.
+It started as an org-file, but then I ran into github's org mode support not
+including a way to specify image display size. See e.g.
 https://stackoverflow.com/questions/54926052/github-org-mode-html-export-image-resizing
