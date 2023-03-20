@@ -10,6 +10,10 @@ Find the original braindump at https://github.com/jethrokuan/braindump
 You could also use org-publish, but on my 1000+ file database, that takes
 forever, even when most of the files don't have to be republished.
 
+P.S. This tool is now also able to munge that Hugo-destined output for
+Obsidian, so that you are able to access your org-mode database using the
+Obsidian mobile app.
+
 * Quickstart
 
 Let's say the root directory containing your nested org-mode database is
@@ -57,14 +61,47 @@ Very importantly, create an empty =web-pkb4000/search/_index.md= just so that yo
   cd notes/pkb4000
   git clone https://github.com/cpbotha/braindump4000.git
   cd notes/pkb4000/braindump4000
-  # this will build the site in ../../web-pkb4000  
-  python3 build.py ~/notes/pkb4000 ~/notes/web-pkb4000
+  # note that the destination directory is the desired Hugo section within "content"
+  # for the cortex theme, this must be "posts"
+  python3 build.py ~/notes/pkb4000 ~/notes/web-pkb4000/content/posts
 #+end_src
 
 The instructions above are just following my example.
 
-However, as long as you configure ~org_dir~ and ~hugo_dir~ correctly in =build.py=,
-everything should work for different directory setups.
+However, as long as you specify your input and output directories correctly,
+everything should work for different setups.
+
+* Obsidian support
+
+braindump4000 is also able to transform your org-mode database into an Obsidian vault.
+
+This is a bit of a hack, but it does yield an Obsidian vault which is quite
+usable, including image attachments, backlinks and so on.
+
+This howto is simpler, because we don't need the whole Hugo site, only
+something that looks like an Obsidian vault:
+
+#+begin_src shell
+  # I usually clone braindump4000 inside my notes database pkb4000
+  cd notes/pkb4000
+  git clone https://github.com/cpbotha/braindump4000.git
+  cd notes/pkb4000/braindump4000
+  python3 build.py --obsidian ~/notes/pkb4000 ~/notes/obs-pkb4000/content/posts
+#+end_src
+
+After this, you can open =~/notes/obs-pkb4000/= as an Obsidian vault.
+
+The markdown in =content/posts/= has been massaged (see [[file:./obs_postproc.py][obs_postproc.py]] for
+details) to support Obsidian's particular expectations, and images generally
+end up in =static/ox-hugo=.
+
+Personally, I use [[https://syncthing.net/][syncthing]] and [[https://www.mobiussync.com/][Möbius Sync]] to push the converted vault into
+Obsidian's sandbox on my iPhone in order to get mobile access to my Org mode
+database.
+
+Note: On the mobile app, remember to activate =Settings - Editor - Display -
+Srict line breaks= as the ox-hugo / markdown generally does add single line
+breaks inside paragraphs.
 
 * Obligatory screenshot(s)
 
@@ -77,11 +114,20 @@ Lessons about the Brain book notes and finally my Books backlinks.
 My braindump site is being served using [[https://github.com/PierreZ/goStatic][goStatic,]] tightly bound to a private
 [[https://tailscale.com/][tailnet]] IP.
 
-* Secret bonus-round
+** Obsidian mobile app
+:PROPERTIES:
+:ID:       96519759-e345-4e62-9ef7-3959f77d6411
+:END:
 
-braindump4000 is also able to transform your org-mode database into a vault
-usable by Obsidian.
+[[file:screenshots/obs_search.jpg]]
 
-I've *just* added this [2023-03-18 Sat 14:39]. it's documented in the code, and
-the cli help, but I have to run now. Will add more later.
+[[file:screenshots/obs_code.jpg]]
+
+[[file:screenshots/obs_image.jpg]]
+
+[[file:screenshots/obs_backlinks.jpg]]
+
+
+
+
 
