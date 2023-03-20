@@ -82,7 +82,7 @@ def transform(text):
     return t5
 
 # uncomment when testing with cell-based execution
-print(transform(s))
+#print(transform(s))
 
 #%%
 def main():
