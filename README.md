@@ -129,11 +129,8 @@ private [tailnet](https://tailscale.com/) IP.
 ### Obsidian mobile app
 
 [<img src="screenshots/obs_search.jpg" width="200" />](screenshots/obs_search.jpg)
-
 [<img src="screenshots/obs_code.jpg" width="200" />](screenshots/obs_code.jpg)
-
 [<img src="screenshots/obs_image.jpg" width="200" />](screenshots/obs_image.jpg)
-
 [<img src="screenshots/obs_backlinks.jpg" width="200" />](screenshots/obs_backlinks.jpg)
 
 
