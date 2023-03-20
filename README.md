@@ -130,11 +130,11 @@ private [tailnet](https://tailscale.com/) IP.
 
 [<img src="screenshots/obs_search.jpg" width="200" />](screenshots/obs_search.jpg)
 
-[![](screenshots/obs_code.jpg)](file:screenshots/obs_code.jpg)
+[<img src="screenshots/obs_code.jpg" width="200" />](screenshots/obs_code.jpg)
 
-[![](screenshots/obs_image.jpg)](file:screenshots/obs_image.jpg)
+[<img src="screenshots/obs_image.jpg" width="200" />](screenshots/obs_image.jpg)
 
-[![](screenshots/obs_backlinks.jpg)](file:screenshots/obs_backlinks.jpg)
+[<img src="screenshots/obs_backlinks.jpg" width="200" />](screenshots/obs_backlinks.jpg)
 
 
 ## FAQ
