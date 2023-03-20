@@ -99,7 +99,7 @@ python3 build.py --obsidian ~/notes/pkb4000 ~/notes/obs-pkb4000/content/posts
 After this, you can open `~/notes/obs-pkb4000/` as an Obsidian vault.
 
 The markdown in `content/posts/` has been massaged (see
-[obs~postproc~.py](./obs_postproc.py) for details) to support Obsidian's
+[`obs_postproc.py`](./obs_postproc.py) for details) to support Obsidian's
 particular expectations, and images generally end up in
 `static/ox-hugo`.
 
