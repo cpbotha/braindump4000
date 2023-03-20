@@ -108,10 +108,25 @@ Sync](https://www.mobiussync.com/) to push the converted vault into
 Obsidian's sandbox on my iPhone in order to get mobile access to my Org
 mode database.
 
-Note: On the mobile app, remember to activate
-`Settings - Editor - Display -
-Srict line breaks` as the ox-hugo / markdown generally does add single
-line breaks inside paragraphs.
+### Obsidian app configuration
+
+Activate `Settings - Editor - Display - Srict line breaks` as the ox-hugo /
+markdown generally does add single line breaks inside paragraphs.
+
+These scripts add the org-mode note title as the first h1 / `#` heading to the
+file, whilst the Obsidian app wants to display the filename as the title.
+
+In order to hide the built-in Obsidian filename-title display, create the file
+`vault/.obsidian/snippets/hide-title.css` with the following contents:
+
+```css
+div.inline-title {
+  display: none;
+}
+```
+
+Then, in `settings - appearance - css snippets`, refresh and activate
+`hide-title`.
 
 ## Obligatory screenshot(s)
 
