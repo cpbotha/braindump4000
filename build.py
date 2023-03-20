@@ -10,7 +10,7 @@ parser.add_argument('org_dir',
 parser.add_argument('out_dir', 
                     help='Output directory. This must take the form hugo-site/content/something, where "something" is usually posts')
 parser.add_argument('--obsidian', action='store_true',
-                    help='Perform Obsidian-targeted link rewrite. Default: Hugo only.')
+                    help='Perform Obsidian-targeted markdown transformations. Default: Hugo only.')
 
 args = parser.parse_args()
 
