@@ -53,11 +53,14 @@ def transform(text):
     # note the two strategically placed non-greedy *? operators else this will eat up additional example +++ blocks
     t2 = re.sub(r'^\s*\+\+\+.*?title = "([^"]+)".*?\+\+\+', "# \\1", text, flags=re.DOTALL)
 
-    # 1. replace all relref links with "normal" [title](localfile) links
+    # 1. replace all [Name]({{< relref "localfile.md" >}}) links with "normal" [title](<localfile.md>) links
+    #    - note we only search and replace the part within the latter [...] part
+    #    - we surround the linkdest inside [..] with <> as per CommonMark https://spec.commonmark.org/0.30/#link-destination
+    #      so that filenames with spaces and other ASCII control characters also work
     # 2. In addition, work around Obsidian's silly lack of user-defined named anchor support:
     #    rewrite all links with anchors to `#^anchor` obs blockrefs; here we do only the relref (otherfile) ones
     #    See t35 next, and t5 below for the rest of this hack
-    t3 = re.sub(r'{{< relref "([^"#]+)(#([^"]+))?" >}}', lambda m: m.group(1) + (f"#^{m.group(3)}" if m.group(3) else ''), t2)
+    t3 = re.sub(r'{{< relref "([^"#]+)(#([^"]+))?" >}}', lambda m: "<" + m.group(1) + (f"#^{m.group(3)}" if m.group(3) else '') + ">", t2)
 
     # here we rewrite all local [label](#anchor) to [label](#^anchor)
     t35 = re.sub(r'(\[[^]]+\])\(#([^)]+)\)', '\\1(#^\\2)', t3)
