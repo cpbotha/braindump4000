@@ -104,4 +104,4 @@ cmd = ["ninja"]
 if args.j:
     cmd.extend(["-j", str(args.j)])
 
-#subprocess.call(cmd)
+subprocess.call(cmd)
