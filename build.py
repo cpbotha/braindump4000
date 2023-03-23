@@ -68,23 +68,33 @@ files = org_dir.rglob("*.org")
 
 post_proc = f" && {obs_postproc_py} $out" if args.obsidian else ""
 
+# for ninja, we have to escape space with $, i.e. " " -> "$ "
+def _ninja_escape(path: Path) -> str:
+    return str(path).replace(" ", "$ ")
+
 # - we create build.ninja in the output dir
 # - experiment: -nw added because it looked like the many emacs instances were messing with my wslg
 with Path("build.ninja").open("w") as ninja_file:
     ninja_file.write(
         f"""
 rule org2md
-  command = emacs -nw --batch -l {init_tiny_el} -l {publish_el} --eval \"(cpb/publish \\"{org_dir}\\" \\"$in\\" \\"{hugo_dir}\\" \\"$out\\" )\"{post_proc}
+  command = emacs -nw --batch -l {init_tiny_el} -l {publish_el} --eval \"(cpb/publish \\"{org_dir}\\" \\"$in_\\" \\"{hugo_dir}\\" \\"$out_\\" )\"{post_proc}
   description = org2md $in
 """
     )
 
     for f in files:
         rf = f.relative_to(org_dir)
-        output_file = out_dir / rf.with_suffix(".md")
+        output_file = _ninja_escape(out_dir / rf.with_suffix(".md"))
+        input_file = _ninja_escape(org_dir / rf)
+        # note: we have to pass through our own $in_ and $out_ to the rule, 
+        # because if we use built-in $in and $out, ninja will single quote filenames
+        # with spaces in them, and Emacs then reads those as literal single quotes
         ninja_file.write(
             f"""
-build {output_file}: org2md {org_dir / rf}
+build {output_file}: org2md {input_file}
+    in_ = {input_file}
+    out_ = {output_file}
 """
         )
 
@@ -94,4 +104,4 @@ cmd = ["ninja"]
 if args.j:
     cmd.extend(["-j", str(args.j)])
 
-subprocess.call(cmd)
+#subprocess.call(cmd)
