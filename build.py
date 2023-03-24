@@ -63,14 +63,26 @@ obs_postproc_py = this_dir / "obs_postproc.py"
 out_dir.mkdir(parents=True, exist_ok=True)
 os.chdir(out_dir)
 
+# the main goal is to convert all of these nested org files into md files in the output
+org_files_input = org_dir.rglob("*.org")
+# ... but we also want to copy across any source .md files
+md_files_input = org_dir.rglob("*.md")
 
-files = org_dir.rglob("*.org")
-
+# optionally add script that does extra post-proc for obsidian
 post_proc = f" && {obs_postproc_py} $out" if args.obsidian else ""
 
 # for ninja, we have to escape space with $, i.e. " " -> "$ "
 def _ninja_escape(path: Path) -> str:
+    """Escape space characters with `$` as required by ninja"""
     return str(path).replace(" ", "$ ")
+
+def _make_in_out(f):
+    """Calculate and escape full input and output filenames"""
+    rf = f.relative_to(org_dir)
+    output_file = _ninja_escape(out_dir / rf.with_suffix(".md"))
+    input_file = _ninja_escape(org_dir / rf)
+    return input_file, output_file
+
 
 # - we create build.ninja in the output dir
 # - experiment: -nw added because it looked like the many emacs instances were messing with my wslg
@@ -80,13 +92,16 @@ with Path("build.ninja").open("w") as ninja_file:
 rule org2md
   command = emacs -nw --batch -l {init_tiny_el} -l {publish_el} --eval \"(cpb/publish \\"{org_dir}\\" \\"$in_\\" \\"{hugo_dir}\\" \\"$out_\\" )\"{post_proc}
   description = org2md $in
+
+rule COPY
+  command = cp $in $out
 """
     )
 
-    for f in files:
-        rf = f.relative_to(org_dir)
-        output_file = _ninja_escape(out_dir / rf.with_suffix(".md"))
-        input_file = _ninja_escape(org_dir / rf)
+    out_files_main = []
+    for f in org_files_input:
+        input_file, output_file = _make_in_out(f)
+        out_files_main.append(output_file)
         # note: we have to pass through our own $in_ and $out_ to the rule, 
         # because if we use built-in $in and $out, ninja will single quote filenames
         # with spaces in them, and Emacs then reads those as literal single quotes
@@ -97,6 +112,20 @@ build {output_file}: org2md {input_file}
     out_ = {output_file}
 """
         )
+
+    # in the final stage, we copy across any .md files that already live in the
+    # org hierarchy. This is because I sometimes have useful .md snippets between
+    # my org-files. We only do this if it won't overwrite a same-named .md file
+    # that was converted from .org into the output directory
+    for f in md_files_input:
+        input_file, output_file = _make_in_out(f)
+        if output_file not in out_files_main:
+            ninja_file.write(
+                f"""
+build {output_file}: COPY {input_file}
+"""
+            )
+
 
 import subprocess
 
