@@ -11,8 +11,6 @@
 ;; if you DO WANT ox-hugo to error out on each missing link so you can fix it, just comment out the line below
 (advice-add #'org-hugo--search-and-get-anchor :around #'oh--saga)
 
-(recentf-mode -1)
-
 ;; this is the main publish org -> md function
 ;; it improves over jethrokuan's original in the following ways:
 ;; - supports nested org-files (it will maintain the directory structure on the hugo side)

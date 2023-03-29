@@ -5,6 +5,11 @@
 ;; delete the 6 "disable ghostscript format types" lines in /etc/ImageMagick-6/policy.xml
 ;; https://stackoverflow.com/questions/52998331/imagemagick-security-policy-pdf-blocking-conversion
 
+;; try to redirect AND disable recentf so it doesn't mess with ~/.emacs.d/recentf
+;; (the problem is that when you disable recentf-mode, it tries to save the list first)
+(setq recentf-save-file (expand-file-name "recentf" "/tmp"))
+(recentf-mode -1)
+
 ;; we add melpa so we can install ox-hugo
 (setq package-archives
       '(
