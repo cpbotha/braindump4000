@@ -35,6 +35,8 @@ theme:
 ``` shell
 cd ~/notes/web-pkb4000/themes
 git clone https://github.com/jethrokuan/cortex.git
+cd ..
+echo "theme = 'cortex'" >> hugo.toml
 ```
 
 Install his
